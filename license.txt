@@ -1,0 +1,2 @@
+Released under the terms of the PHP_CodeSniffer license at 
+https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt
