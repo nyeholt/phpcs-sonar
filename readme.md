@@ -7,4 +7,4 @@ on the PHP_CodeSniffer repository that was never merged in
 (https://github.com/squizlabs/PHP_CodeSniffer/pull/2451). Have extracted for use in projects 
 by adding this repository to your project, then running
 
-`phpcs --report=./vendor/symbiote/phpcs-sonar/src/Sonar.php
+`phpcs --report=./vendor/symbiote/phpcs-sonar/src/Sonar.php`
