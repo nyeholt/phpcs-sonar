@@ -1,7 +1,7 @@
 <?php
 /**
  * SonarQube report for PHP_CodeSniffer.
- * 
+ *
  * phpcs --report=vendor/symbiote/phpcs-sonar/src/Sonar.php
  *
  * @author  Marek Víger <marek.viger@gmail.com>
@@ -16,8 +16,6 @@ use PHP_CodeSniffer\Reports\Report;
 
 class Sonar implements Report
 {
-
-
     /**
      * Generate a partial report for a single processed file.
      *
@@ -45,7 +43,7 @@ class Sonar implements Report
                             "\t" => '\t',
                         ]
                     );
-                    
+
                     // swap to relative references for sonar-scanner to be able to resolve
                     // file paths
                     if (isset($report['filename']) && $report['filename'][0] == '/') {
@@ -55,8 +53,8 @@ class Sonar implements Report
                     $issue = [
                         'engineId'        => 'PHP_CodeSniffer',
                         'ruleId'          => $error['source'],
-                        'type'            => 'CODE_SMELL',
-                        'severity'        => $this->convertErrorTypeToSonarSeverity($error['type']),
+                        'type'            => $this->convertErrorToType($error),
+                        'severity'        => $this->convertErrorToSonarSeverity($error),
                         'primaryLocation' => [
                             'message'   => $error['message'],
                             'filePath'  => $report['filename'],
@@ -113,20 +111,40 @@ class Sonar implements Report
     }//end generate()
 
 
+    private function convertErrorToType($error) {
+        if (isset($error['source']) && stripos($error['source'], 'security') !== false) {
+            return 'VULNERABILITY';
+        }
+
+        return 'BUG';
+    }
+
+
     /**
      * Convert error type to SonarQube severity key
      *
-     * @param string $type error type
+     * @param array $error The error
      *
      * @return string
      */
-    private function convertErrorTypeToSonarSeverity($type)
+    private function convertErrorToSonarSeverity($error)
     {
-        if ($type === 'ERROR') {
-            return 'MAJOR';
+        $type = $error['type'];
+        $severity = $error['severity'];
+
+        if ($severity >= 6) {
+            return 'CRITICAL';
+        }
+
+        if ($type === 'ERROR' && $severity >= 5) {
+            return 'CRITICAL';
         }
 
         if ($type === 'WARNING') {
+            return 'MAJOR';
+        }
+
+        if ($severity >=3) {
             return 'MINOR';
         }
 
