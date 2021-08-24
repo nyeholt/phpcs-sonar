@@ -140,7 +140,7 @@ class Sonar implements Report
             return 'CRITICAL';
         }
 
-        if ($type === 'WARNING') {
+        if ($type === 'WARNING' && $severity >= 5) {
             return 'MAJOR';
         }
 
