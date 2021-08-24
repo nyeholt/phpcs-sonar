@@ -7,4 +7,16 @@ on the PHP_CodeSniffer repository that was never merged in
 (https://github.com/squizlabs/PHP_CodeSniffer/pull/2451). Have extracted for use in projects 
 by adding this repository to your project, then running
 
-`phpcs --report=./vendor/symbiote/phpcs-sonar/src/Sonar.php`
+## Installation
+
+Due to some composer installer constraints, you'll need to add the security audit 
+module to your root level composer json so that aliasing works as expected;
+
+```
+composer require --dev dealerdirect/phpcodesniffer-composer-installer:"0.7.1 as 0.6.0" pheromone/phpcs-security-audit:dev-master
+composer require pheromone/phpcs-security-audit:dev-master
+```
+
+## Usage 
+
+`./vendor/bin/phpcs --standard=Security --report=./vendor/symbiote/phpcs-sonar/src/Sonar.php path/ > report-file.json`
