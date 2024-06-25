@@ -112,7 +112,7 @@ class Sonar implements Report
 
 
     private function convertErrorToType($error) {
-        if (isset($error['source']) && stripos($error['source'], 'security') !== false) {
+        if (isset($error['source']) && stripos((string) $error['source'], 'security') !== false) {
             return 'VULNERABILITY';
         }
 
