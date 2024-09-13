@@ -14,7 +14,6 @@ module to your root level composer json so that aliasing works as expected;
 
 ```
 composer require --dev dealerdirect/phpcodesniffer-composer-installer:"0.7.1 as 0.6.0" pheromone/phpcs-security-audit:dev-master
-composer require pheromone/phpcs-security-audit:dev-master
 ```
 
 ## Usage 
